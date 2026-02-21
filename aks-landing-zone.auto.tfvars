@@ -41,11 +41,11 @@ vnet_address_space = "10.10.0.0/16"
 
 subnet_address_prefixes = {
   aks_system_nodes  = "10.10.0.0/24"
-  aks_user_nodes    = "10.10.4.0/22"
-  aks_api_server    = "10.10.8.0/28"
-  app_gateway       = "10.10.9.0/24"
-  private_endpoints = "10.10.10.0/24"
-  ingress           = "10.10.11.0/24"
+  aks_user_nodes    = "10.10.16.0/22"
+  aks_api_server    = "10.10.20.0/28"
+  app_gateway       = "10.10.21.0/24"
+  private_endpoints = "10.10.22.0/24"
+  ingress           = "10.10.23.0/24"
 }
 
 # Hub VNet peering (from your ALZ deployment)
@@ -207,6 +207,6 @@ keyvault_private_dns_zone_ids  = []
 # -----------------------------------------------------------------------------
 log_retention_days    = 90
 grafana_sku           = "Standard"
-grafana_zone_redundancy = true
+grafana_zone_redundancy = false
 grafana_public_access   = true
 grafana_admin_group_object_id = "2a151a66-e0ce-455a-bae5-8a21513e3004"
