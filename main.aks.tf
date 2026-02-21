@@ -89,7 +89,7 @@ module "aks" {
   }
 
   # Local accounts
-  local_account_disabled = var.disable_local_accounts
+  disable_local_accounts = var.disable_local_accounts
 
   # --------------------------------------------------------------------------
   # OIDC Issuer + Workload Identity + Defender + Image Cleaner
@@ -130,7 +130,7 @@ module "aks" {
     min_count           = var.system_node_pool.min_count
     max_count           = var.system_node_pool.max_count
     count_of            = var.system_node_pool.node_count
-    fips_enabled        = var.enable_fips
+    enable_fips         = var.enable_fips
 
     upgrade_settings = {
       max_surge = var.system_node_pool.max_surge
@@ -157,7 +157,7 @@ module "aks" {
       max_count           = var.user_node_pool.max_count
       count_of            = var.user_node_pool.node_count
       mode                = "User"
-      fips_enabled        = var.enable_fips
+      enable_fips         = var.enable_fips
 
       upgrade_settings = {
         max_surge = var.user_node_pool.max_surge
@@ -177,16 +177,25 @@ module "aks" {
   }
 
   # --------------------------------------------------------------------------
-  # Maintenance Window - Scheduled window for auto-upgrades
+  # Maintenance Configuration - Scheduled window for auto-upgrades
   # Best Practice: Define maintenance windows to control when upgrades happen
+  # Uses the AVM maintenanceconfiguration sub-module
   # --------------------------------------------------------------------------
-  maintenance_window_auto_upgrade = {
-    frequency   = var.maintenance_window.frequency
-    interval    = var.maintenance_window.interval
-    duration    = var.maintenance_window.duration
-    day_of_week = var.maintenance_window.day_of_week
-    start_time  = var.maintenance_window.start_time
-    utc_offset  = var.maintenance_window.utc_offset
+  maintenanceconfiguration = {
+    auto_upgrade = {
+      name = "aksManagedAutoUpgradeSchedule"
+      maintenance_window = {
+        duration_hours = var.maintenance_window.duration
+        schedule = {
+          weekly = {
+            day_of_week    = var.maintenance_window.day_of_week
+            interval_weeks = var.maintenance_window.interval
+          }
+        }
+        start_time = var.maintenance_window.start_time
+        utc_offset = var.maintenance_window.utc_offset
+      }
+    }
   }
 
   # --------------------------------------------------------------------------
@@ -217,9 +226,15 @@ module "aks" {
   # Service Mesh (Istio)
   # --------------------------------------------------------------------------
   service_mesh_profile = var.enable_istio_service_mesh ? {
-    mode                             = "Istio"
-    internal_ingress_gateway_enabled = var.istio_internal_ingress_gateway
-    external_ingress_gateway_enabled = var.istio_external_ingress_gateway
+    mode = "Istio"
+    istio = {
+      components = {
+        ingress_gateways = concat(
+          var.istio_internal_ingress_gateway ? [{ enabled = true, mode = "Internal" }] : [],
+          var.istio_external_ingress_gateway ? [{ enabled = true, mode = "External" }] : []
+        )
+      }
+    }
   } : null
 
   # --------------------------------------------------------------------------
@@ -238,7 +253,7 @@ module "aks" {
   # Node Auto Provisioning (NAP / Karpenter)
   # --------------------------------------------------------------------------
   node_provisioning_profile = var.enable_node_auto_provisioning ? {
-    enabled = true
+    mode = "Auto"
   } : null
 
   # --------------------------------------------------------------------------
