@@ -1,0 +1,19 @@
+# CI Caller Workflow - Triggered on Pull Requests to validate changes
+# Runs terraform plan to preview infrastructure changes before merge
+name: "01 AKS Landing Zone Continuous Integration"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  CI:
+    uses: abengtss-max-org/akstest-t01-templates/.github/workflows/ci-template.yaml@main
+    with:
+      environment: akstest-plan
+    secrets: inherit

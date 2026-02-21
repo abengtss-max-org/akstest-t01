@@ -1,0 +1,35 @@
+# 02 AKS Landing Zone Continuous Delivery
+# Triggered on push to main (after PR merge) and manual dispatch
+# Plan runs automatically, Apply requires team approval via environment protection
+name: "02 AKS Landing Zone Continuous Delivery"
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/ci.yaml"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action: 'apply' to deploy, 'destroy' to teardown"
+        required: true
+        type: choice
+        options:
+          - apply
+          - destroy
+        default: apply
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  CD:
+    uses: abengtss-max-org/akstest-t01-templates/.github/workflows/cd-template.yaml@main
+    with:
+      plan_environment: akstest-plan
+      apply_environment: akstest-apply
+      action: ${{ inputs.action || 'apply' }}
+    secrets: inherit
