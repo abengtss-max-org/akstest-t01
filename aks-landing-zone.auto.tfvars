@@ -41,11 +41,11 @@ vnet_address_space = "10.10.0.0/16"
 
 subnet_address_prefixes = {
   aks_system_nodes  = "10.10.0.0/24"
-  aks_user_nodes    = "10.10.1.0/22"
-  aks_api_server    = "10.10.5.0/28"
-  app_gateway       = "10.10.6.0/24"
-  private_endpoints = "10.10.7.0/24"
-  ingress           = "10.10.8.0/24"
+  aks_user_nodes    = "10.10.4.0/22"
+  aks_api_server    = "10.10.8.0/28"
+  app_gateway       = "10.10.9.0/24"
+  private_endpoints = "10.10.10.0/24"
+  ingress           = "10.10.11.0/24"
 }
 
 # Hub VNet peering (from your ALZ deployment)

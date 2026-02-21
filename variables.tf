@@ -88,12 +88,12 @@ variable "subnet_address_prefixes" {
     ingress           = string
   })
   default = {
-    aks_system_nodes  = "10.10.0.0/24" # 256 IPs - System node pool (CriticalAddonsOnly)
-    aks_user_nodes    = "10.10.1.0/22" # 1024 IPs - User/workload node pools
-    aks_api_server    = "10.10.5.0/28" # 16 IPs - API server VNet integration
-    app_gateway       = "10.10.6.0/24" # 256 IPs - App Gateway
-    private_endpoints = "10.10.7.0/24" # 256 IPs - Private endpoints
-    ingress           = "10.10.8.0/24" # 256 IPs - Ingress/load balancer
+    aks_system_nodes  = "10.10.0.0/24"  # 256 IPs  - System node pool (CriticalAddonsOnly)
+    aks_user_nodes    = "10.10.4.0/22"  # 1024 IPs - User/workload node pools
+    aks_api_server    = "10.10.8.0/28"  # 16 IPs   - API server VNet integration
+    app_gateway       = "10.10.9.0/24"  # 256 IPs  - App Gateway
+    private_endpoints = "10.10.10.0/24" # 256 IPs  - Private endpoints
+    ingress           = "10.10.11.0/24" # 256 IPs  - Ingress/load balancer
   }
 }
 
@@ -609,7 +609,7 @@ variable "grafana_sku" {
 variable "grafana_zone_redundancy" {
   description = "Enable zone redundancy for Grafana."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "grafana_public_access" {
