@@ -78,7 +78,7 @@ resource "azurerm_resource_provider_registration" "operational_insights" {
 }
 
 resource "azurerm_resource_provider_registration" "insights" {
-  name = "Microsoft.Insights"
+  name = "microsoft.insights"
 }
 
 resource "azurerm_resource_provider_registration" "monitor" {

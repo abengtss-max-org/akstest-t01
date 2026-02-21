@@ -52,12 +52,12 @@ variable "workload_name" {
 }
 
 variable "environment" {
-  description = "The environment name (e.g., dev, staging, prod)."
+  description = "The environment name (e.g., dev, staging, prod, or test identifier)."
   type        = string
   default     = "prod"
   validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "Environment must be one of: dev, staging, prod."
+    condition     = can(regex("^[a-z0-9]{1,8}$", var.environment))
+    error_message = "Environment must be 1-8 lowercase alphanumeric characters."
   }
 }
 
