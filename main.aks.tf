@@ -189,15 +189,6 @@ module "aks" {
     utc_offset  = var.maintenance_window.utc_offset
   }
 
-  maintenance_window_node_os = {
-    frequency   = var.maintenance_window.frequency
-    interval    = var.maintenance_window.interval
-    duration    = var.maintenance_window.duration
-    day_of_week = var.maintenance_window.day_of_week
-    start_time  = var.maintenance_window.start_time
-    utc_offset  = var.maintenance_window.utc_offset
-  }
-
   # --------------------------------------------------------------------------
   # Monitoring - Azure Monitor / Container Insights
   # --------------------------------------------------------------------------
@@ -229,13 +220,6 @@ module "aks" {
     mode                             = "Istio"
     internal_ingress_gateway_enabled = var.istio_internal_ingress_gateway
     external_ingress_gateway_enabled = var.istio_external_ingress_gateway
-  } : null
-
-  # --------------------------------------------------------------------------
-  # Web Application Routing (Managed NGINX)
-  # --------------------------------------------------------------------------
-  web_app_routing = var.enable_nginx_ingress ? {
-    enabled = true
   } : null
 
   # --------------------------------------------------------------------------
@@ -292,18 +276,6 @@ module "aks" {
       workspace_resource_id = module.log_analytics.resource_id
     }
   } : {}
-
-  # --------------------------------------------------------------------------
-  # Cost Analysis (requires Standard or Premium SKU)
-  # --------------------------------------------------------------------------
-  cost_analysis_enabled = var.enable_cost_analysis
-
-  # --------------------------------------------------------------------------
-  # Flux GitOps Extension
-  # --------------------------------------------------------------------------
-  fluxv2_config = var.enable_flux ? {
-    enabled = true
-  } : null
 
   depends_on = [
     azurerm_role_assignment.aks_network_contributor,
