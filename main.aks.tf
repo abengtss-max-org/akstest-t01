@@ -318,6 +318,4 @@ resource "azapi_resource" "aks_backup_extension" {
       releaseTrain            = "Stable"
     }
   }
-
-  tags = local.default_tags
 }
