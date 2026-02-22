@@ -134,7 +134,7 @@ variable "use_remote_gateways" {
 variable "kubernetes_version" {
   description = "The version of Kubernetes for AKS."
   type        = string
-  default     = "1.30"
+  default     = "1.33"
 }
 
 variable "aks_sku_tier" {
