@@ -36,6 +36,9 @@ module "aks" {
   location  = azurerm_resource_group.main.location
   tags      = local.default_tags
 
+  # DNS prefix for the cluster
+  dns_prefix = local.aks_name
+
   # Kubernetes version
   kubernetes_version = var.kubernetes_version
 
