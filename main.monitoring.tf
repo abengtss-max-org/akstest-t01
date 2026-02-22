@@ -103,7 +103,7 @@ resource "azurerm_dashboard_grafana" "main" {
   zone_redundancy_enabled       = var.grafana_zone_redundancy
   public_network_access_enabled = var.grafana_public_access
   api_key_enabled               = true
-  grafana_major_version         = "10"
+  grafana_major_version         = var.grafana_major_version
 
   identity {
     type = "SystemAssigned"

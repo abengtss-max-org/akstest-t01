@@ -606,6 +606,12 @@ variable "grafana_sku" {
   default     = "Standard"
 }
 
+variable "grafana_major_version" {
+  description = "Grafana major version. Valid values: 11, 12."
+  type        = string
+  default     = "11"
+}
+
 variable "grafana_zone_redundancy" {
   description = "Enable zone redundancy for Grafana."
   type        = bool

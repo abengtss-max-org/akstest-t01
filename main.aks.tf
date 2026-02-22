@@ -41,6 +41,7 @@ module "aks" {
 
   # SKU
   sku = {
+    name = "Base"
     tier = var.aks_sku_tier # "Standard" for production, "Free" for dev
   }
 
